@@ -1,0 +1,2 @@
+#!/bin/bash
+./build/bin/raspivid --width 1640 --height 922 --mode 5 --framerate 30 --verbose --output /dev/null --vectors /dev/null --timeout 10000000000

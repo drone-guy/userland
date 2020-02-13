@@ -1,0 +1,48 @@
+release_client_context: released context 3
+[673742725153] got h264 data callback; size 50766
+allocate_client_context: allocated context 3
+[0] got motion vectors callback; size 24128
+allocate_client_context: allocated context 4
+vchiq_callback: >>>>>
+vchiq_callback: msg=0xb6409738, msg->drvbuf.client_context=0xfedc0004
+vchiq_callback: client_context=0x1026ea4
+vchiq_callback: client_context->callback=0xb6f56b40
+vchiq_callback: <<<<<<
+release_client_context: released context 4
+vchiq_callback: >>>>>
+vchiq_callback: msg=0xb64076e8, msg->drvbuf.client_context=0xfedc0003
+vchiq_callback: client_context=0x1026fe8
+vchiq_callback: client_context->callback=0xb6f56b40
+vchiq_callback: <<<<<<
+release_client_context: released context 3
+[673742758480] got h264 data callback; size 50272
+allocate_client_context: allocated context 3
+[0] got motion vectors callback; size 24128
+allocate_client_context: allocated context 4
+vchiq_callback: >>>>>
+vchiq_callback: msg=0xb640a768, msg->drvbuf.client_context=0xfedc0004
+vchiq_callback: client_context=0x1026ea4
+vchiq_callback: client_context->callback=0xb6f56b40
+vchiq_callback: <<<<<<
+release_client_context: released context 4
+vchiq_callback: >>>>>
+vchiq_callback: msg=0xb64076e8, msg->drvbuf.client_context=0xfedc0003
+[673742791807] got h264 data callback; size 50239
+allocate_client_context: allocated context 4
+vchiq_callback: client_context=0x1026fe8
+vchiq_callback: client_context->callback=0xb6f56b40
+vchiq_callback: <<<<<<
+release_client_context: released context 3
+[0] got motion vectors callback; size 24128
+allocate_client_context: allocated context 3
+vchiq_callback: >>>>>
+vchiq_callback: msg=0xb6409738, msg->drvbuf.client_context=0xfedc0004
+vchiq_callback: client_context=0x1026ea4
+vchiq_callback: client_context->callback=0xb6f56b40
+vchiq_callback: <<<<<<
+release_client_context: released context 4
+vchiq_callback: >>>>>
+vchiq_callback: msg=0xb64076e8, msg->drvbuf.client_context=0xfedc0004
+vchiq_callback: client_context=0x0
+[673742825135] got h264 data callback; size 50383
+./test_raspivid: line 2:   573 Segmentation fault      ./build/bin/raspivid --width 1640 --height 922 --mode 5 --framerate 30 --verbose --output /dev/null --vectors /dev/null --timeout 10000000000

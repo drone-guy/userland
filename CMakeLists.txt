@@ -37,7 +37,7 @@ include_directories(host_support/include)
 
 # Global compiler flags
 if(CMAKE_COMPILER_IS_GNUCC)
-   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-multichar -Wall -Wno-unused-but-set-variable -fPIC")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-multichar -Wall -Wno-unused-but-set-variable -fPIC -ggdb -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard -march=armv8-a+crc")
 endif()
 
 add_definitions(-D_REENTRANT)

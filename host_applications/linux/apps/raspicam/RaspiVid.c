@@ -1213,8 +1213,34 @@ static void encoder_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buf
       base_time = get_microseconds64()/1000;
 
    // We pass our file handle and other stuff in via the userdata field.
+   if (buffer->flags & MMAL_BUFFER_HEADER_FLAG_CODECSIDEINFO)
+     printf("[%lld] got motion vectors callback; size %d\n",buffer->pts, buffer->length);
+   else
+     printf("[%lld] got h264 data callback; size %d\n",buffer->pts, buffer->length);
+
 
    PORT_USERDATA *pData = (PORT_USERDATA *)port->userdata;
+
+   // release buffer back to the pool
+   mmal_buffer_header_release(buffer);
+
+   // and send one back to the port (if still open)
+   if (port->is_enabled)
+   {
+      MMAL_STATUS_T status;
+
+      new_buffer = mmal_queue_get(pData->pstate->encoder_pool->queue);
+
+      if (new_buffer)
+         status = mmal_port_send_buffer(port, new_buffer);
+
+      if (!new_buffer || status != MMAL_SUCCESS)
+         vcos_log_error("Unable to return a buffer to the encoder port");
+   }
+
+   return;
+
+
 
    if (pData)
    {
@@ -1995,6 +2021,8 @@ static MMAL_STATUS_T create_encoder_component(RASPIVID_STATE *state)
 
    if (encoder_output->buffer_num < encoder_output->buffer_num_min)
       encoder_output->buffer_num = encoder_output->buffer_num_min;
+
+   encoder_output->buffer_num = VIDEO_OUTPUT_BUFFERS_NUM;
 
    // We need to set the frame rate on output to 0, to ensure it gets
    // updated correctly from the input framerate when port connected

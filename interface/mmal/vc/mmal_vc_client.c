@@ -193,6 +193,7 @@ uint32_t mmal_vc_allocate_client_context(MMAL_VC_CLIENT_BUFFER_CONTEXT_T *contex
    }
    vcos_mutex_unlock(&client_context_pool.lock);
 
+   printf("allocate_client_context: allocated context %d\n",i);
    return i | CLIENT_CONTEXT_MAGIC;
 }
 
@@ -219,7 +220,8 @@ void mmal_vc_release_client_context(MMAL_VC_CLIENT_BUFFER_CONTEXT_T *context)
       {
          client_context_pool.contexts[i].ctx = NULL;
          client_context_pool.contexts[i].inuse = 0;
-         break;
+         printf("release_client_context: released context %d\n",i);
+	 break;
       }
    }
    if (i >= MAX_CLIENT_CONTEXTS)
@@ -671,7 +673,12 @@ static VCHIQ_STATUS_T mmal_vc_vchiq_callback(VCHIQ_REASON_T reason,
             mmal_worker_buffer_from_host *msg = (mmal_worker_buffer_from_host *)msg_hdr;
             MMAL_VC_CLIENT_BUFFER_CONTEXT_T *client_context = mmal_vc_lookup_client_context(msg->drvbuf.client_context);
             vcos_assert(client_context && client_context->magic == MMAL_MAGIC);
-            client_context->callback(msg);
+            printf("vchiq_callback: >>>>>\n");
+	    printf("vchiq_callback: msg=0x%x, msg->drvbuf.client_context=0x%x\n",(uint32_t)msg,(uint32_t)msg->drvbuf.client_context);
+	    printf("vchiq_callback: client_context=0x%x\n",(uint32_t)client_context);
+	    printf("vchiq_callback: client_context->callback=0x%x\n",(uint32_t)client_context->callback); 
+	    printf("vchiq_callback: <<<<<<\n");
+	    client_context->callback(msg);
             LOG_TRACE("bulk rx done: %08x, %d", msg->buffer_header.data, msg->buffer_header.length);
          }
          else
